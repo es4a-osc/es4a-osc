@@ -1,13 +1,8 @@
 - 入门教程
     - [快速入门](tutorial/started.md)
 - Simple
-    - [语法](simple/grammar.md)
-    - [类型](simple/type.md)
-    - [声明](simple/declaration.md)
-    - [语句](simple/statement.md)
-- 类库开发
-    - [核心类库](library/core.md)
-    - [开发指南](library/develop.md)
+    - [语言定义](simple/Simple语言定义.md)
+    - [类库开发](simple/Simple类库开发.md)
 - 附加其它
     - [更新日志](CHANGELOG.md)
 - 友情链接
