@@ -1,8 +1,8 @@
 # 编写 Simple 类库：Java 实现
 
-> 实现指南｜核对日期：2026-10-08｜依据：当前编译器 RuntimeLoader、运行库注解与 com.example.demo 源码｜适用范围：当前 ES4A SDK 与 VS Code 扩展。
+<!-- 文档信息：实现指南｜核对日期：2026-10-08｜依据：当前编译器 RuntimeLoader、运行库注解与 com.example.demo 源码｜适用范围：当前 ES4A SDK 与 VS Code 扩展。 -->
 
-本文回答如何用 Java 实现 Simple 对象、函数和 Android 组件。完整流程从[类库开发入口](library-development/README.md)开始；工程结构、依赖、权限与发布见[构建与交付](library-development/build.md)，IDE 元数据见[清单定义参考](reference/manifests.md)，入口注册见[SDK 配置参考](reference/sdk.md)。
+用 Java 注解公开对象、函数、属性和事件。工程准备见[工程与交付](library/build.md)；IDE 描述见[清单定义](library/manifests.md)，注册方式见[SDK 配置](library/sdk.md)。
 
 ## 注解映射
 
@@ -16,6 +16,8 @@
 | `@SimpleProperty` 方法 | 属性获取器或设置器 |
 | `@SimpleEvent` 方法 | 事件 |
 | `@SimpleDataElement` 字段 | 常量或变量 |
+| `@UsesPermissions` | [Android 权限声明](library/java.md#android-权限) |
+| `@ManifestNodes` | [Android 清单节点](library/java.md#android-清单节点) |
 
 ## 数据类型对应
 
@@ -266,6 +268,55 @@ public final class 演示按钮Impl extends 视图组件 implements 演示按钮
 
 !> 间接实现组件接口时，当前加载器不能把实现类与组件自动配对，编译时会报告缺少组件实现。
 
+## Android 权限
+
+需要 Android 权限的对象使用 `@UsesPermissions`：
+
+```java
+@SimpleObject
+@UsesPermissions(permissionNames = "android.permission.INTERNET")
+public final class HTTP服务 {
+}
+```
+
+多个权限使用逗号分隔。编译器只为项目实际引用的对象收集权限。该注解只负责生成 Android 清单声明；危险权限仍需在应用运行时请求，并处理用户拒绝授权的情况。
+
+## Android 清单节点
+
+`@ManifestNodes` 可以向 Android 清单的固定位置加入节点：
+
+```java
+@SimpleObject
+@ManifestNodes(
+	rootXml = "<uses-feature android:name=\"android.hardware.camera\" />",
+	applicationXml = "<meta-data android:name=\"demo.appId\" android:value=\"${应用标识}\" />"
+)
+public final class 示例对象 {
+}
+```
+
+| 字段 | 插入位置 |
+| --- | --- |
+| `rootXml` | `/manifest` |
+| `applicationXml` | `/manifest/application` |
+| `activityXml` | 主 Activity |
+| `intentFilterXml` | 主 Activity 的 Intent Filter |
+
+节点可以引用项目属性：
+
+- `${宏名}`：必填，未配置时编译失败。
+- `${宏名=缺省值}`：可选，未配置时使用缺省值。
+
+项目在 `project.properties` 中按“Java 类简名.宏名”赋值：
+
+```properties
+示例对象.应用标识=my-app-id
+```
+
+!> 宏是文本替换，不会自动转义 XML。类库必须保证注解文本和替换后的值都是合法 XML。
+
+可选宏的缺省值可以为空文本；仅项目实际引用对象的节点参与注入。宏值中的美元符号和反斜杠按字面替换，仍须保证替换后的 XML 合法。
+
 ## 下一步
 
-为已经实现的公开类型编写[清单定义](reference/manifests.md)，再按[构建与交付](library-development/build.md)生成类库、接入 SDK 并验证。Java 注解决定编译器可调用的成员；清单描述这些成员在 IDE 中的显示，两者必须一致。
+为已经实现的公开类型编写[清单定义](library/manifests.md)，再按[构建与交付](library/build.md)生成类库、接入 SDK 并验证。Java 注解决定编译器可调用的成员；清单描述这些成员在 IDE 中的显示，两者必须一致。

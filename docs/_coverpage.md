@@ -2,10 +2,7 @@
 
 # **ES4A**
 
-> 中文 Simple · Android 应用开发
+> 安卓应用开发工具
 
-按你的目的开始阅读
-
-[Simple 项目开发](simple/README.md)
-[Simple 类库开发](library-development/README.md)
-[下载与准备](tutorial/environment.md)
+[项目开发](project/README.md)
+[类库开发](library/README.md)

@@ -1,5 +1,2 @@
-- [知识库首页](README.md)
-- [Simple 项目开发](simple/README.md)
-- [Simple 类库开发](library-development/README.md)
 - [下载](https://dwz.wsd.cx/es4a-xz)
 - [交流](https://dwz.wsd.cx/es4a-jl)

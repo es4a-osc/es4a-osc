@@ -1,13 +1,12 @@
 # SDK 配置参考
 
-> 配置参考｜核对日期：2026-10-08｜依据：sdk/sdk.json、能力脚本、模板及 extension/src/sdk.ts、projectCapability.ts｜适用范围：当前 ES4A SDK 与 VS Code 扩展。
+<!-- 文档信息：配置参考｜核对日期：2026-10-09｜依据：sdk/sdk.json、能力脚本、模板及 extension/src/sdk.ts、projectCapability.ts、Compiler.java｜适用范围：当前 ES4A SDK 与 VS Code 扩展。 -->
 
-本文面向 SDK 接入与类库维护者，回答 `sdk.json` 如何注册类库、声明能力和配置模板。只需开发应用的读者直接阅读[环境准备与 SDK 使用](tutorial/environment.md)，不需要修改 SDK 清单。
+`sdk.json` 注册编译器、运行库和扩展类库，并声明工具能力与项目模板。
 
 SDK 根目录包括 `sdk.json`、`capabilities/`、`simple/`、`libraries/`、`templates/` 和 `tools/`。ES4A 仅加载用户通过“选择 SDK”明确指定的入口；未配置或入口路径失效时保持未加载状态，不推断工作区中的 SDK。
 
 ## 入口字段
-
 
 下例展示核心入口字段，完整配置见 `sdk.json`：
 
@@ -41,9 +40,10 @@ SDK 根目录包括 `sdk.json`、`capabilities/`、`simple/`、`libraries/`、`t
 - `libraries` 必须为明确路径数组，仅加载注册的清单，不支持通配表达式。
 - 编译器、运行库固定在前；扩展类库按注册数组顺序加载和显示，调整数组位置即可调整顺序。
 - 重复路径只保留第一次注册；同名定义优先使用最先加载的定义。
-分类、定义及设计器分组规则见[清单定义参考](reference/manifests.md#分类与定义)。
 
-此处登记控制 IDE 元数据。Simple 编译器通过 `LIBRARIES_HOME` 扫描类库代码，具体规则见[编译与打包](library-development/build.md#编译与打包)。
+分类、定义及设计器分组规则见[清单定义参考](library/manifests.md#分类与定义)。
+
+此处登记控制 IDE 元数据。Simple 编译器通过 `LIBRARIES_HOME` 扫描类库代码，具体规则见[编译与打包](library/build.md#编译与打包)。
 
 ## 能力调用
 
@@ -76,7 +76,11 @@ SDK 根目录包括 `sdk.json`、`capabilities/`、`simple/`、`libraries/`、`t
 | `PROJECT_FILE` | 项目的 `project.properties` 绝对路径。 |
 | `APK_FILE` | 项目构建目录下 `deploy/<应用名称>.apk` 的绝对路径。 |
 
-当前 `compile` 使用按[环境准备](tutorial/environment.md)放置的 JDK、Android API 26 和 Simple 工具链编译项目；`debug` 先编译，再通过 ADB 安装 APK 并启动应用。脚本负责工具路径、环境变量和执行流程。
+当前 `compile` 使用按[环境准备](project/environment.md)放置的 JDK、Android API 26 和 Simple 工具链编译项目；`debug` 先编译，再通过 ADB 安装 APK 并启动应用。脚本负责工具路径、环境变量和执行流程。
+
+### 编译能力与签名
+
+当前编译器默认使用调试签名。自定义签名由项目配置中的证书位置 `key.location`、别名 `key.alias` 和能力进程的环境变量 `KEY_PASSWORD` 提供；`key.password` 不生效，缺少证书或密码时仍使用调试签名。SDK 维护者接入发布流程时，应验证 APK 的实际签名，不能仅以编译成功判断发布签名已生效。
 
 ## 模板
 

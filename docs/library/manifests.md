@@ -1,10 +1,10 @@
 # 清单定义参考
 
-> 配置参考｜核对日期：2026-10-08｜依据：当前 SDK 清单、extension/src/sdk.ts、属性框及设计器消费代码｜适用范围：当前 ES4A SDK 与 VS Code 扩展。
+<!-- 文档信息：配置参考｜核对日期：2026-10-08｜依据：当前 SDK 清单、extension/src/sdk.ts、属性框及设计器消费代码｜适用范围：当前 ES4A SDK 与 VS Code 扩展。 -->
 
-本文描述 `library.json`、`SimpleCompiler.json` 与 `SimpleAndroidRuntime.json` 的共用结构，回答分类、类型、成员和设计器元数据如何填写。扩展类库使用 `kind: "library"`；编译器和运行库分别使用 `compiler`、`runtime`。
+本文描述 `library.json`、`SimpleCompiler.json` 与 `SimpleAndroidRuntime.json` 的共用结构，回答分类、类型、成员和设计器元数据如何填写。扩展库使用 `kind: "library"`；编译器和运行库分别使用 `compiler`、`runtime`。
 
-JSON 提供 IDE 元数据，不生成 Java 实现，不改变编译器的名称解析，也不能把未加公开注解的方法变成 Simple API。Java 注解的用法见[编写类库](simple/Simple类库开发.md)，清单注册、顺序和统一路径语义见[SDK 配置参考](reference/sdk.md)。
+JSON 提供 IDE 元数据，不生成 Java 实现，不改变编译器的名称解析，也不能把未加公开注解的方法变成 Simple API。Java 注解的用法见[编写类库](library/java.md)，清单注册、顺序和统一路径语义见[SDK 配置参考](library/sdk.md)。
 
 ## 最小类库示例
 
@@ -245,7 +245,7 @@ JSON 提供 IDE 元数据，不生成 Java 实现，不改变编译器的名称�
 
 `gravity` 表示组件内部内容的对齐方式，`layoutGravity` 表示组件自身在父容器中的对齐方式，两者不要混用。
 
-适用布局的定义与示例见[分组与适用布局](reference/manifests.md#分组与适用布局)。
+适用布局的定义与示例见[分组与适用布局](library/manifests.md#分组与适用布局)。
 
 ## 属性编辑器
 
@@ -269,11 +269,11 @@ JSON 提供 IDE 元数据，不生成 Java 实现，不改变编译器的名称�
 - 整数和浮点类型校验数值字面量；普通文本输入转换为字符串字面量，已有字符串或表达式保持原意；变体型按输入外形处理。
 - 单独符号、调用或资源引用由当前 SDK 与项目语义索引核对；含运算符的组合表达式不在属性框递归验证。
 
-`editor` 只控制 IDE 输入界面。JSON 的 `initializer` 用于设计期缺省显示与分析；Java 注解的初始化职责及与 JSON 的对应关系见[Java 属性实现](simple/Simple类库开发.md#属性)。
+`editor` 只控制 IDE 输入界面。JSON 的 `initializer` 用于设计期缺省显示与分析；Java 注解的初始化职责及与 JSON 的对应关系见[Java 属性实现](library/java.md#属性)。
 
 ## 定义和检查边界
 
 - 清单名称、分类名称、定义名称、成员名称和参数名称必须是非空字符串；数组和对象结构应与本参考一致。`group` 必须非空，`layouts` 必须为非空字符串数组。
 - `type`、成员类型、参数顺序、返回类型和 `inherits` 必须与 Java 实现一致。清单加载成功不代表这些内容已通过编译器或设备验证。
 - 未知元数据不会自动产生新行为；未知投影不参与画布投影，不应据此承诺设备效果。
-- 修改后按[类库验证与交付](library-development/build.md#验证与发布)检查 IDE 显示、继承成员、设计器、正式编译与设备运行。
+- 修改后按[类库验证与交付](library/build.md#验证与发布)检查 IDE 显示、继承成员、设计器、正式编译与设备运行。
