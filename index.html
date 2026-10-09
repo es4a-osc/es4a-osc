@@ -8,7 +8,7 @@
 	<meta name="keywords" content="e,vb,es4a,simple,android,安卓,中文编程" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<link rel="icon" href="static/image/favicon.ico" type="image/x-icon" />
-	<!-- docsify主题(基于 https://cdn.jsdelivr.net/npm/docsify@4.11.3/themes/vue.css 优化而来) -->
+	<!-- docsify主题，基于 https://cdn.jsdelivr.net/npm/docsify@4.11.3/themes/vue.css 优化而来 -->
 	<link rel="stylesheet" href="static/css/vue.css" />
 </head>
 <body>
@@ -49,40 +49,30 @@
 			"/.*/_navbar.md": "/_navbar.md",
 			"/.*/_sidebar.md": "/_sidebar.md"
 		},
-		/* 插件配置项 */
-
+		// 插件配置项
+		plugins: [
+			function (hook, vm) {
+				hook.doneEach(function () {
+					// Docsify 设置原标签页标题后追加站点名称，避免重复追加
+					const suffix = ` - ${vm.config.name}`;
+					if (document.title !== vm.config.name && !document.title.endsWith(suffix)) {
+						document.title += suffix;
+					}
+				});
+			}
+		],
 		// 全文搜索/search
 		search: {
 			// 过期时间，单位毫秒，默认一天
-			maxAge: 0,
+			maxAge: 86400000,
 			// 路径
-			paths: [
-				"/CHANGELOG",
-				"/README",
-				"/ROADMAP",
-				"/library/README",
-				"/library/build",
-				"/library/java",
-				"/library/manifests",
-				"/library/sdk",
-				"/project/README",
-				"/project/runtime",
-				"/project/build",
-				"/project/designer",
-				"/project/environment",
-				"/project/faq",
-				"/project/syntax",
-				"/project/extensions",
-				"/project/operations",
-				"/project/quickstart"
-			],
+			paths: "auto",
 			// 搜索提示
-			placeholder: "搜索文档",
+			placeholder: "搜索...",
 			// 未搜索到显示
 			noData: "没有找到相关内容",
 			// 搜索标题的最大程级，1 - 6
-			depth: 4,
-			namespace: "es4a-docs-20261009-slim"
+			depth: 4
 		},
 		// 复制代码到剪贴板/docsify-copy-code
 		copyCode: {
@@ -94,26 +84,20 @@
 	</script>
 
 	<!-- 基础依赖 -->
-
 	<!-- Docsify核心(https://github.com/docsifyjs/docsify) -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/docsify.min.js"></script>
 
 	<!-- Docsify官方插件 -->
-
-	<!-- 本地搜索摘要适配，先于搜索插件加载 -->
-	<script src="static/js/search-text.js"></script>
 	<!-- 全文搜索(https://github.com/docsifyjs/docsify/tree/develop/src/plugins/search) -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/plugins/search.min.js"></script>
 	<!-- 图片缩放(https://github.com/docsifyjs/docsify/tree/develop/src/plugins) -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/plugins/zoom-image.min.js"></script>
 
 	<!-- Docsify第三方插件 -->
-
 	<!-- 复制代码到剪贴板(https://github.com/jperasmus/docsify-copy-code) -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/docsify-copy-code/3.0.0/docsify-copy-code.min.js"></script>
 
 	<!-- Prism代码高亮 -->
-
 	<!-- Prism核心 -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 	<!-- INI -->
@@ -122,7 +106,7 @@
 	<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
 	<!-- Java -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
-	<!-- Simple 本地自定义实现(基于 https://cdn.jsdelivr.net/npm/prismjs@1.20.0/components/prism-visual-basic.js 修改而来) -->
+	<!-- Simple 本地自定义实现，基于 https://cdn.jsdelivr.net/npm/prismjs@1.20.0/components/prism-visual-basic.js 修改而来 -->
 	<script src="static/js/prism-simple.js"></script>
 </body>
 </html>

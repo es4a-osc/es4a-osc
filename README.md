@@ -18,8 +18,7 @@ python -m http.server 8001 --bind 127.0.0.1
 
 ## 维护
 
-- 应用文档在 `docs/project/`，类库开发文档在 `docs/library/`；更新日志与开发计划分别维护。
-- 新增或移动页面时，同步 `_sidebar.md`、搜索路径和相关 README 链接，检查网页、章节定位与搜索。不保留旧地址兼容页。
+- 应用文档在 `docs/project/`，类库开发文档在 `docs/library/`，更新日志在 `docs/CHANGELOG.md`。
+- 新增或移动页面时，同步 `docs/_sidebar.md` 和相关 README 链接；原生搜索通过 `paths: "auto"` 从侧栏发现页面。检查网页、章节定位与搜索，不保留旧地址兼容页。
 - 运行库与扩展库只维护使用方法，具体成员和样例随 SDK 版本查阅。
 - 保留语言与配置规则及有效示例；核对信息写在正文开头的 HTML 注释中。
-- 试验内容位于 `test.html` 和 `docs/test/`，不进入正式导航与搜索。
