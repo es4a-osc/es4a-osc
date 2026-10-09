@@ -1,112 +1,345 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
 	<meta charset="utf-8" />
-	<title>ES4A</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta name="description" content="安卓应用开发工具" />
-	<meta name="keywords" content="e,vb,es4a,simple,android,安卓,中文编程" />
-	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="ES4A 是面向 Simple 中文编程语言的 Android 集成开发环境。在 Visual Studio Code 中编写代码、设计窗口、管理项目并编译运行。" />
+	<meta name="theme-color" content="#181818" />
+	<title>ES4A · 中文编程，为 Android 而生</title>
 	<link rel="icon" href="static/image/favicon.ico" type="image/x-icon" />
-	<!-- docsify主题，基于 https://cdn.jsdelivr.net/npm/docsify@4.11.3/themes/vue.css 优化而来 -->
-	<link rel="stylesheet" href="static/css/vue.css" />
+	<style>
+		:root {
+			color-scheme: dark;
+			--background: #181818;
+			--surface: #202020;
+			--text: #ededed;
+			--muted: #aaa;
+			--accent: #0078d4;
+			--border: #333;
+			--code: #75beff;
+			--design: #c7a6ef;
+			--project: #73c9b2;
+		}
+		* { box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body { margin: 0; background: var(--background); color: var(--text); font-family: "Segoe UI", "Microsoft YaHei", sans-serif; -webkit-font-smoothing: antialiased; }
+		a { color: inherit; text-decoration: none; transition: color 150ms, background-color 150ms; }
+		a:hover { color: var(--code); }
+		a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--code); outline-offset: 5px; }
+		.container { width: min(1180px, calc(100% - 64px)); margin-inline: auto; }
+		.site-header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--border); background: rgb(24 24 24 / 96%); }
+		.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 76px; }
+		.brand { display: inline-flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 650; }
+		.brand img { display: block; width: 32px; height: 32px; }
+		.header-links { display: flex; gap: 28px; }
+		.header-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-size: 14px; }
+		.header-links a:hover { color: var(--text); }
+		.hero { display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; gap: 56px; padding-block: 88px 80px; }
+		.hero-copy { min-width: 0; }
+		.eyebrow { margin: 0 0 24px; color: var(--muted); font-size: 13px; letter-spacing: 0.5px; }
+		h1 { margin: 0; font-size: clamp(40px, 4.5vw, 60px); font-weight: 650; line-height: 1.3; letter-spacing: -1.5px; }
+		h1 span { color: var(--code); }
+		.description { max-width: 480px; margin: 24px 0 0; color: var(--muted); font-size: 16px; line-height: 1.9; }
+		.hero-traits { display: flex; flex-wrap: wrap; gap: 10px 20px; margin: 24px 0 0; padding: 0; color: #ccc; list-style: none; font-size: 12px; }
+		.hero-traits li { display: flex; align-items: center; gap: 7px; }
+		.hero-traits li::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--code); }
+		.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+		.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 26px; border: 1px solid #484848; border-radius: 4px; background: #252526; font-size: 15px; font-weight: 500; }
+		.button:hover { background: #2d2d30; color: var(--text); border-color: #666; }
+		.button.primary { background: var(--accent); border-color: var(--accent); color: white; }
+		.button.primary:hover { background: #006bbd; border-color: #006bbd; }
+		.hero-note { margin: 16px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+		.hero-note a { margin-left: 4px; color: var(--code); text-decoration: underline; text-underline-offset: 4px; }
+		.workspace { min-width: 0; margin: 0; }
+		.preview-image { display: block; width: 100%; height: auto; border: 1px solid #414141; border-radius: 6px; background: var(--surface); }
+		.workspace figcaption { margin-top: 14px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+		.feature-details { padding-block: 56px 64px; border-top: 1px solid var(--border); }
+		.feature-details, .capabilities, .faq { scroll-margin-top: 104px; }
+		.section-label { margin: 0 0 12px; color: var(--code); font-size: 13px; }
+		.section-heading { margin: 0 0 32px; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.4; font-weight: 600; }
+		.section-heading span { display: inline-block; }
+		.feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+		.feature-card { min-width: 0; padding: 28px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); transition: border-color 180ms, background-color 180ms; }
+		.feature-card:hover { border-color: #505050; background: #232323; }
+		.feature-card svg { display: block; width: 28px; height: 28px; margin-bottom: 22px; color: var(--dot); fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+		.feature-card h3 { margin: 0 0 12px; font-size: 20px; font-weight: 550; line-height: 1.5; }
+		.feature-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
+		.capabilities { padding-block: 64px; border-top: 1px solid var(--border); text-align: center; }
+		.capabilities h2 { max-width: 740px; margin: 0 auto 14px; font-size: clamp(26px, 3vw, 34px); font-weight: 600; line-height: 1.5; }
+		.cloud-intro { margin: 0 auto 32px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+		.feature-cloud { position: relative; isolation: isolate; }
+		.cloud-brand { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 28px; }
+		.cloud-logo { display: grid; place-items: center; width: 84px; height: 84px; border: 1px solid #454548; border-radius: 14px; background: var(--surface); }
+		.cloud-logo img { display: block; width: 54px; height: 54px; }
+		.cloud-brand strong { font-size: 14px; font-weight: 500; letter-spacing: 1px; }
+		.feature-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0; padding: 0; list-style: none; }
+		.code { --dot: var(--code); }
+		.design { --dot: var(--design); }
+		.project { --dot: var(--project); }
+		.feature-tags li { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 40px; padding: 10px 15px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: #d4d4d4; font-size: 13px; white-space: nowrap; }
+		.feature-tags li::before, .cloud-legend span::before { content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%; background: var(--dot); }
+		.cloud-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin: 28px 0 0; color: var(--muted); font-size: 12px; }
+		.cloud-legend span { display: inline-flex; align-items: center; gap: 8px; }
+		.faq { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; padding-block: 64px 80px; border-top: 1px solid var(--border); }
+		.faq-heading p:last-child { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+		.faq .section-heading { margin-bottom: 16px; }
+		.faq-list { min-width: 0; border-top: 1px solid var(--border); }
+		.faq details { border-bottom: 1px solid var(--border); }
+		.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 68px; padding-block: 18px; cursor: pointer; list-style: none; font-size: 15px; line-height: 1.7; }
+		.faq summary::-webkit-details-marker { display: none; }
+		.faq summary::after { content: "+"; flex: none; width: 24px; color: var(--muted); text-align: center; font-size: 24px; font-weight: 300; }
+		.faq details[open] summary::after { content: "−"; color: var(--code); }
+		.faq details[open] summary { color: var(--code); }
+		.faq-answer { padding: 0 32px 22px 0; color: var(--muted); font-size: 14px; line-height: 1.9; }
+		.faq-answer p { margin: 0; }
+		.faq-answer ol { margin: 0; padding-left: 22px; }
+		.faq-answer li + li { margin-top: 6px; }
+		.faq-answer a { color: var(--code); text-decoration: underline; text-underline-offset: 3px; }
+		.faq-answer code { color: #ccc; font-family: Consolas, monospace; font-size: 13px; overflow-wrap: anywhere; }
+		.site-footer { border-top: 1px solid var(--border); background: #151515; }
+		.footer-inner { display: grid; grid-template-columns: 1fr auto auto; gap: 80px; padding-block: 44px; }
+		.footer-brand p { margin: 16px 0 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+		.footer-group h2 { margin: 0 0 12px; color: #ccc; font-size: 13px; font-weight: 500; }
+		.footer-group a { display: block; width: fit-content; padding-block: 7px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+		.footer-group a:hover { color: var(--code); }
+		.back-top { position: fixed; right: 24px; bottom: 24px; z-index: 20; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid #484848; border-radius: 50%; background: #252526; color: var(--text); cursor: pointer; box-shadow: 0 4px 16px rgb(0 0 0 / 25%); }
+		.back-top[hidden] { display: none; }
+		.back-top:hover { background: #303030; }
+		.back-top svg { width: 42px; height: 42px; fill: none; }
+		.progress-track { stroke: #444; stroke-width: 2; }
+		.progress-ring { stroke: var(--code); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; transform: rotate(-90deg); transform-origin: 24px 24px; }
+		.back-arrow { stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+		@media (min-width: 761px) {
+			.feature-cloud { max-width: 1020px; height: 380px; margin-inline: auto; }
+			.feature-cloud::before, .feature-cloud::after { content: ""; position: absolute; z-index: -1; inset: 6% 5% 9% 3%; border: 1px solid rgb(117 190 255 / 8%); border-radius: 50%; background: rgb(117 190 255 / 2%); transform: rotate(-4deg); }
+			.feature-cloud::after { inset: 23% 22% 24% 20%; transform: rotate(8deg); }
+			.cloud-brand { position: absolute; top: 52%; left: 50%; margin: 0; transform: translate(-50%, -50%); }
+			.feature-tags { display: block; }
+			.feature-tags li { position: absolute; top: var(--y); left: var(--x); font-size: var(--size, 13px); transform: translate(-50%, -50%) rotate(var(--tilt, 0deg)); transition: background-color 180ms, border-color 180ms; }
+			.feature-tags li:hover { border-color: var(--dot); background: #292929; }
+		}
+		@media (max-width: 1000px) {
+			.hero { gap: 32px; padding-block: 64px; }
+			h1 { font-size: 42px; }
+			.feature-card { padding: 24px; }
+			.faq { gap: 40px; }
+		}
+		@media (max-width: 760px) {
+			.container { width: calc(100% - 40px); }
+			.hero { grid-template-columns: 1fr; gap: 40px; padding-block: 48px 56px; }
+			h1 { font-size: clamp(36px, 7vw, 50px); letter-spacing: -1px; }
+			.hero-copy { max-width: 560px; }
+			.description { max-width: 520px; }
+			.feature-details { padding-block: 40px; }
+			.section-heading span { display: inline-block; }
+		.feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+			.section-heading { margin-bottom: 24px; }
+			.capabilities { padding-block: 40px; }
+			.cloud-intro { max-width: 480px; font-size: 13px; }
+			.faq { grid-template-columns: 1fr; gap: 28px; padding-block: 40px 56px; }
+			.footer-inner { gap: 40px; }
+		}
+		@media (max-width: 480px) {
+			.header-inner { flex-wrap: wrap; gap: 4px; padding-block: 12px 4px; min-height: 0; }
+			.brand { gap: 8px; font-size: 20px; }
+			.brand img { width: 28px; height: 28px; }
+			.header-links { width: 100%; justify-content: space-between; gap: 10px; }
+			.header-links a { font-size: 12px; }
+			.header-links .community-link { display: none; }
+			.feature-details, .capabilities, .faq { scroll-margin-top: 120px; }
+			.hero { padding-block: 40px; }
+			.eyebrow { margin-bottom: 20px; font-size: 12px; }
+			h1 { font-size: clamp(31px, 8.7vw, 40px); }
+			.description { margin-top: 20px; font-size: 14px; }
+			.hero-traits { gap: 10px 14px; }
+			.button { padding-inline: 22px; font-size: 14px; }
+			.section-heading span { display: inline-block; }
+		.feature-grid { grid-template-columns: 1fr; }
+			.feature-card { padding: 24px; }
+			.feature-card svg { float: left; width: 24px; height: 24px; margin: 3px 12px 0 0; }
+			.feature-card h3 { font-size: 18px; margin-bottom: 16px; }
+			.cloud-logo { width: 64px; height: 64px; border-radius: 12px; }
+			.cloud-logo img { width: 42px; height: 42px; }
+			.feature-tags li { gap: 7px; padding-inline: 12px; font-size: 12px; }
+			.cloud-legend { gap: 18px; }
+			.faq summary { font-size: 14px; }
+			.footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; padding-block: 32px; }
+			.footer-brand { grid-column: 1 / -1; }
+			.back-top { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			html { scroll-behavior: auto; }
+			a, .feature-card, .feature-tags li { transition: none; }
+		}
+	</style>
+	<script src="static/js/main.js" defer></script>
 </head>
 <body>
-	<!-- 绑定元素 -->
-	<div id="app">🚀 正在加载文档中...</div>
-
-	<!-- docsify文档定义 -->
-	<script>
-	window.$docsify = {
-		// 文档名称
-		name: "ES4A",
-		// 文档加载的根路径，可以是二级路径或者是其他域名的路径
-		// 这里用相对路径，让文档支持在子仓库页中可正常显示
-		basePath: "./docs/",
-		// 启用相对路径
-		relativePath: false,
-		// 启用封面；加载 _coverpage.md
-		coverpage: true,
-		// 定制导航栏，加载 _navbar.md
-		loadNavbar: true,
-		// 定制侧边栏；加载 _sidebar.md
-		loadSidebar: true,
-		// 定制404页面，加载 _404.md
-		notFoundPage: true,
-		// 切换页面后是否自动跳转到页面顶部
-		auto2top: true,
-		// 正式文档不执行 Markdown 中的试验脚本
-		executeScript: false,
-		// 小屏设备下合并导航栏到侧边栏
-		mergeNavbar: true,
-		// 最大支持渲染的标题层级
-		maxLevel: 4,
-		// 生成目录(侧边栏)的最大层级
-		subMaxLevel: 2,
-		// 定义路由别名，可以更自由的定义路由规则。支持正则。
-		alias: {
-			// 解决因浏览目录中文档时，会自动请求目录下的 _navbar.md _sidebar.md
-			"/.*/_navbar.md": "/_navbar.md",
-			"/.*/_sidebar.md": "/_sidebar.md"
-		},
-		// 插件配置项
-		plugins: [
-			function (hook, vm) {
-				hook.doneEach(function () {
-					// Docsify 设置原标签页标题后追加站点名称，避免重复追加
-					const suffix = ` - ${vm.config.name}`;
-					if (document.title !== vm.config.name && !document.title.endsWith(suffix)) {
-						document.title += suffix;
-					}
-				});
-			}
-		],
-		// 全文搜索/search
-		search: {
-			// 过期时间，单位毫秒，默认一天
-			maxAge: 86400000,
-			// 路径
-			paths: "auto",
-			// 搜索提示
-			placeholder: "搜索...",
-			// 未搜索到显示
-			noData: "没有找到相关内容",
-			// 搜索标题的最大程级，1 - 6
-			depth: 4
-		},
-		// 复制代码到剪贴板/docsify-copy-code
-		copyCode: {
-			buttonText : '复制',
-			errorText  : '错误',
-			successText: '复制'
-		},
-	}
-	</script>
-
-	<!-- 基础依赖 -->
-	<!-- Docsify核心(https://github.com/docsifyjs/docsify) -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/docsify.min.js"></script>
-
-	<!-- Docsify官方插件 -->
-	<!-- 全文搜索(https://github.com/docsifyjs/docsify/tree/develop/src/plugins/search) -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/plugins/search.min.js"></script>
-	<!-- 图片缩放(https://github.com/docsifyjs/docsify/tree/develop/src/plugins) -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/plugins/zoom-image.min.js"></script>
-
-	<!-- Docsify第三方插件 -->
-	<!-- 复制代码到剪贴板(https://github.com/jperasmus/docsify-copy-code) -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/docsify-copy-code/3.0.0/docsify-copy-code.min.js"></script>
-
-	<!-- Prism代码高亮 -->
-	<!-- Prism核心 -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
-	<!-- INI -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.29.0/components/prism-ini.min.js"></script>
-	<!-- JSON -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
-	<!-- Java -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
-	<!-- Simple 本地自定义实现，基于 https://cdn.jsdelivr.net/npm/prismjs@1.20.0/components/prism-visual-basic.js 修改而来 -->
-	<script src="static/js/prism-simple.js"></script>
+	<header class="site-header">
+		<div class="container header-inner">
+			<a class="brand" href="./" aria-label="ES4A 首页"><img src="static/image/logo.svg" alt="" width="32" height="32" /><span>ES4A</span></a>
+			<nav class="header-links" aria-label="主导航">
+				<a href="#features">功能概览</a>
+				<a href="#language">语言特色</a>
+				<a href="#faq">常见问题</a>
+				<a href="https://gitee.com/es4a">开源仓库 <span aria-hidden="true">↗</span></a>
+				<a class="community-link" href="https://dwz.wsd.cx/es4a-jl">交流社区 <span aria-hidden="true">↗</span></a>
+			</nav>
+		</div>
+	</header>
+	<main class="container">
+		<section class="hero" aria-labelledby="intro">
+			<div class="hero-copy">
+				<p class="eyebrow">ES4A · Easy &amp; Simple for Android</p>
+				<h1 id="intro">中文编程，<br /><span>为 Android 而生。</span></h1>
+				<p class="description">Simple 中文编程语言的集成开发环境。<br />在 Visual Studio Code 中写逻辑、搭界面，把应用运行在 Android 设备上。</p>
+				<ul class="hero-traits"><li>中文 BASIC</li><li>组件与事件</li><li>Android 应用</li></ul>
+				<div class="actions">
+					<a class="button primary" href="https://dwz.wsd.cx/es4a-vsix">扩展下载</a>
+					<a class="button" href="https://dwz.wsd.cx/es4a-sdk">SDK 下载</a>
+				</div>
+				<p class="hero-note">还没安装 VS Code？<a href="https://code.visualstudio.com/download">下载 VS Code <span aria-hidden="true">↗</span></a></p>
+			</div>
+			<figure class="workspace" aria-labelledby="workspace-caption">
+				<!--
+					补图：ES4A 工作区总览，建议 1600×900（16:9）。
+					AI 提示词：使用真实 VS Code ES4A 工作区截图，采用深色主题，同时展示项目树、
+					Simple 代码编辑和窗口设计器。选择通用应用样例，保证中文代码清晰可读；
+					避开绝对路径、账户、终端、日期、版本号和具体扩展库列表，不拼造产品界面或代码。
+					将素材放入 static/image/，替换下方 src，并同步更新 alt、width、height 和图注。
+				-->
+				<img class="preview-image" src="static/image/screenshot-placeholder.svg" alt="ES4A 工作区截图占位，待补图" width="1600" height="900" />
+				<figcaption id="workspace-caption">代码、窗口与项目，同一个工作区。</figcaption>
+			</figure>
+		</section>
+		<section class="feature-details" id="features" aria-labelledby="features-title">
+			<p class="section-label">为 Simple 应用开发而做</p>
+			<h2 class="section-heading" id="features-title"><span>写逻辑。</span><span>搭界面。</span><span>跑应用。</span></h2>
+			<div class="feature-grid">
+				<article class="feature-card code">
+					<!-- 后续代码素材 AI 提示词：使用真实 ES4A 简短有效的 Simple 事件代码截图，可展示实际补全或参数提示。VS Code 深色主题、正常中文字体；避开字符警告框、私人路径和无关面板，不编造代码或提示。 -->
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5-6 7 6 7 M16 5l6 7-6 7 M14 3l-4 18" /></svg>
+					<h3>中文编程</h3>
+					<p>用中文 BASIC 语法写应用逻辑，配合补全、参数提示与定义跳转。</p>
+				</article>
+				<article class="feature-card design">
+					<!-- 后续设计器素材 AI 提示词：使用真实 ES4A 窗口设计器截图，展示画布、布局树和选中组件的属性。少量通用组件、VS Code 深色主题；不混入 Android 运行效果、未实现功能、版本号和私人路径。 -->
+					<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 8h18 M8 8v13 M12 12h5 M12 16h5" /></svg>
+					<h3>窗口设计</h3>
+					<p>拖入组件、调整布局和属性，再添加事件处理，让界面与代码衔接。</p>
+				</article>
+				<article class="feature-card project">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2" /><path d="M11 18h2 m-9-6 3-3-3-3 M1 9h6 M20 18l-3-3 3-3 M23 15h-6" /></svg>
+					<h3>编译运行</h3>
+					<p>通过 SDK 编译为 APK，安装到已连接的 Android 设备并启动运行。</p>
+				</article>
+				<article class="feature-card code">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z M3 12l9 5 9-5 M3 16l9 5 9-5" /></svg>
+					<h3>运行库</h3>
+					<p>调用现有组件和对象，在类库树中查阅成员、参数与说明。</p>
+				</article>
+				<article class="feature-card design">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3v5H3v8h5v5h8v-5h5V8h-5V3Z M8 12h8 M12 8v8" /></svg>
+					<h3>Java 扩展</h3>
+					<p>把 Java 实现封装为 Simple 对象或组件，用扩展库接入所需能力。</p>
+				</article>
+				<article class="feature-card project">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 4h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z M3 7h10" /></svg>
+					<h3>资源管理</h3>
+					<p>集中管理项目资源与资产，编写代码时获取 Android 资源符号提示。</p>
+				</article>
+			</div>
+		</section>
+		<section class="capabilities" id="language" aria-labelledby="capabilities-title">
+			<h2 id="capabilities-title">Simple 的表达力，ES4A 的开发体验。</h2>
+			<p class="cloud-intro">组件与事件、对象与接口，配合熟悉的编辑器，把想法变成应用。</p>
+			<div class="feature-cloud">
+				<div class="cloud-brand" aria-hidden="true">
+					<div class="cloud-logo"><img src="static/image/logo.svg" alt="" width="64" height="64" /></div>
+					<strong>ES4A</strong>
+				</div>
+				<ul class="feature-tags">
+					<li class="code" style="--x: 27%; --y: 10%; --tilt: -2deg; --size: 17px">中文编程</li>
+					<li class="code" style="--x: 11%; --y: 37%; --tilt: -1deg">面向对象</li>
+					<li class="code" style="--x: 33%; --y: 35%; --tilt: 1.5deg">接口与继承</li>
+					<li class="code" style="--x: 15%; --y: 67%; --tilt: -1.5deg; --size: 15px">事件驱动</li>
+					<li class="project" style="--x: 37%; --y: 76%; --tilt: 1deg; --size: 12px">线程与服务</li>
+					<li class="design" style="--x: 68%; --y: 14%; --tilt: 2deg; --size: 16px">窗口设计</li>
+					<li class="design" style="--x: 89%; --y: 35%; --tilt: -1deg">智能补全</li>
+					<li class="design" style="--x: 68%; --y: 41%; --size: 12px">项目管理</li>
+					<li class="design" style="--x: 89%; --y: 66%; --tilt: 1deg; --size: 12px">资源管理</li>
+					<li class="project" style="--x: 65%; --y: 72%; --tilt: -1.5deg; --size: 14px">编译为 APK</li>
+					<li class="project" style="--x: 23%; --y: 92%; --tilt: -1deg">Android 运行库</li>
+					<li class="project" style="--x: 76%; --y: 91%; --tilt: 1.5deg">Java 扩展库</li>
+				</ul>
+			</div>
+			<p class="cloud-legend" aria-hidden="true"><span class="code">Simple 语言</span><span class="design">开发工具</span><span class="project">SDK 能力</span></p>
+		</section>
+		<section class="faq" id="faq" aria-labelledby="faq-title">
+			<div class="faq-heading">
+				<p class="section-label">开始之前</p>
+				<h2 class="section-heading" id="faq-title">常见问题</h2>
+				<p>关于 Simple、开发准备与应用运行。</p>
+			</div>
+			<div class="faq-list">
+				<details name="faq">
+					<summary>ES4A 和 Simple 是什么关系？</summary>
+					<div class="faq-answer"><p>Simple 是面向 Android 的中文 BASIC 方言，以组件和事件组织应用。ES4A 是配套的 VS Code 扩展，提供代码编辑、项目管理和窗口设计；SDK 提供编译器、运行库、扩展库及工具。</p></div>
+				</details>
+				<details name="faq">
+					<summary>开始开发需要准备什么？</summary>
+					<div class="faq-answer">
+						<ol>
+							<li>在 Windows 上下载安装 <a href="https://code.visualstudio.com/download">Visual Studio Code</a>。</li>
+							<li>下载 ES4A 扩展，在 VS Code 扩展面板选择“从 VSIX 安装”。</li>
+							<li>下载并解压 SDK，按其中的 README 准备工具，再在 ES4A 类库视图中选择该 SDK 的 <code>sdk.json</code>。</li>
+						</ol>
+					</div>
+				</details>
+				<details name="faq">
+					<summary>开发应用需要先学 Java 吗？</summary>
+					<div class="faq-answer"><p>应用逻辑使用 Simple 编写，调用现有运行库和扩展库不要求编写 Java。自行开发扩展库、封装新的对象或组件时，才需要编写相应的 Java 实现。</p></div>
+				</details>
+				<details name="faq">
+					<summary>怎么把应用运行到手机上？</summary>
+					<div class="faq-answer"><p>为 Android 设备开启 USB 调试，连接电脑并允许调试授权。配置好 SDK 后，可从 ES4A 项目菜单发起编译；“调试应用”会编译、安装并启动应用，当前不提供断点和单步调试。</p></div>
+				</details>
+				<details name="faq">
+					<summary>可以复用 Java 类库吗？</summary>
+					<div class="faq-answer"><p>可以通过扩展库复用 Java 实现。需要按 Simple 类库规则封装对象或组件，并定义对应清单；普通 JAR 不能仅通过复制到 SDK 就直接在 Simple 中调用。</p></div>
+				</details>
+				<details name="faq">
+					<summary>开发文档在哪里？</summary>
+					<div class="faq-answer"><p>文档位于 SDK 的 <code>docs</code> 目录，从 <code>docs/README.md</code> 开始阅读，按项目开发或类库开发查找对应说明。Markdown 文档可供开发者和 AI 查阅。</p></div>
+				</details>
+			</div>
+		</section>
+	</main>
+	<footer class="site-footer">
+		<div class="container footer-inner">
+			<div class="footer-brand">
+				<a class="brand" href="./" aria-label="ES4A 首页"><img src="static/image/logo.svg" alt="" width="32" height="32" /><span>ES4A</span></a>
+				<p>Easy &amp; Simple for Android<br />用中文，把想法变成应用。</p>
+			</div>
+			<nav class="footer-group" aria-label="下载链接">
+				<h2>开始使用</h2>
+				<a href="https://code.visualstudio.com/download">VS Code 下载 <span aria-hidden="true">↗</span></a>
+				<a href="https://dwz.wsd.cx/es4a-vsix">ES4A 扩展下载 <span aria-hidden="true">↗</span></a>
+				<a href="https://dwz.wsd.cx/es4a-sdk">SDK 下载 <span aria-hidden="true">↗</span></a>
+			</nav>
+			<nav class="footer-group" aria-label="项目链接">
+				<h2>参与项目</h2>
+				<a href="https://gitee.com/es4a">开源仓库 <span aria-hidden="true">↗</span></a>
+				<a href="https://dwz.wsd.cx/es4a-jl">交流社区 <span aria-hidden="true">↗</span></a>
+			</nav>
+		</div>
+	</footer>
+	<button class="back-top" type="button" aria-label="返回顶部" hidden>
+		<svg viewBox="0 0 48 48" aria-hidden="true">
+			<circle class="progress-track" cx="24" cy="24" r="20" />
+			<circle class="progress-ring" cx="24" cy="24" r="20" pathLength="100" />
+			<path class="back-arrow" d="M24 32V16 m-7 7 7-7 7 7" />
+		</svg>
+	</button>
 </body>
 </html>

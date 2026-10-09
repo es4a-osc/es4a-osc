@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+	<title>截图占位</title>
+	<rect width="1600" height="900" fill="#202020" />
+	<g transform="translate(752 330)" fill="none" stroke="#707070" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+		<rect width="96" height="72" rx="6" />
+		<circle cx="28" cy="23" r="7" />
+		<path d="M12 60 37 38 54 52 69 32 84 60" />
+	</g>
+	<text x="800" y="468" fill="#ababab" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="44" text-anchor="middle">截图占位</text>
+	<text x="800" y="512" fill="#808080" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="24" text-anchor="middle">16:9 · 待补图</text>
+</svg>

@@ -1,24 +1,9 @@
-# ES4A 在线文档
+# ES4A 网站
 
-使用 Docsify，为 Simple 项目开发和类库开发提供公开文档。正文在 `docs/`，入口为 `docs/README.md`。
+ES4A 产品介绍、下载与交流入口。
 
-- [在线文档](https://es4a.paike.it/)
-- [项目开发](https://es4a.paike.it/#/project/README)
-- [类库开发](https://es4a.paike.it/#/library/README)
+访问：https://es4a.paike.it
 
-## 本地查看
+页面入口为 `index.html`，本地可通过静态 HTTP 服务查看。
 
-从本目录启动静态 HTTP 服务，例如：
-
-```bat
-python -m http.server 8001 --bind 127.0.0.1
-```
-
-打开服务地址即可阅读。正文、主题与 Simple 高亮来自本仓库，Docsify 及通用插件来自现有 CDN；无需新增依赖。
-
-## 维护
-
-- 应用文档在 `docs/project/`，类库开发文档在 `docs/library/`，更新日志在 `docs/CHANGELOG.md`。
-- 新增或移动页面时，同步 `docs/_sidebar.md` 和相关 README 链接；原生搜索通过 `paths: "auto"` 从侧栏发现页面。检查网页、章节定位与搜索，不保留旧地址兼容页。
-- 运行库与扩展库只维护使用方法，具体成员和样例随 SDK 版本查阅。
-- 保留语言与配置规则及有效示例；核对信息写在正文开头的 HTML 注释中。
+使用与开发文档随 SDK 提供，见 `sdk/docs/README.md`。
