@@ -1,4 +1,4 @@
-# ES4A 文档 <!-- {docsify-ignore-all} -->
+# ES4A 文档
 
 <!-- 文档信息：公开知识库入口｜核对日期：2026-10-08｜依据：当前源码、版本化清单与真实样例｜适用范围：当前 ES4A SDK 与 VS Code 扩展。 -->
 
@@ -16,4 +16,4 @@ ES4A 使用中文 Simple 语言开发 Android 应用。
 
 [开始编写类库](library/README.md)
 
-[更新日志](CHANGELOG.md) · [开发计划](ROADMAP.md)
+[更新日志](CHANGELOG.md)
