@@ -1,10 +1,11 @@
 ![logo](../static/image/logo.svg ':size=128')
 
-# **ES4A**<small> v1.0 alpha</small>
+# **ES4A**
 
-> 简洁 · 易用
+> 中文 Simple · Android 应用开发
 
-安卓应用开发工具
+按你的目的开始阅读
 
-[:inbox_tray: 下载](https://dwz.wsd.cx/es4a-xz)
-[:page_with_curl: 文档](#关于)
+[Simple 项目开发](simple/README.md)
+[Simple 类库开发](library-development/README.md)
+[下载与准备](tutorial/environment.md)

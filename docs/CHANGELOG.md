@@ -1,16 +1,8 @@
 # 更新日志
-> 永远相信美好的事情即将发生...
 
+> 历史变更记录｜整理日期：2026-10-08｜依据：原有版本记录，近期能力结合当前源码核对。历史条目不是当前功能或设备兼容性承诺。
 
-## 计划清单
-- 处理被标记为过期的API
-- 优化编译流程
-- 升级应用签名方式
-- 运行库常量未汉化
-- 寻找可以调用AAR解决方案
-- 完善丰富运行库组件、对象、程序集
-- 优化MainActivity
-- `*\build\classes`编译器编译class文件是增量，重命名单元会残留旧的class文件
+开发方向与未完成事项独立维护在[开发计划](ROADMAP.md)。
 
 ## 2026-09-20
 - 编译器
@@ -93,8 +85,7 @@
 - 运行库
     - [修复] 应用在高版本系统中主线程下执行网络连接（HTTP请求）崩溃（`android.os.NetworkOnMainThreadException`）
     - [修复] 应用在高版本系统中切换窗口崩溃（`java.lang.IllegalStateException`）
- 
-> 根据《移动应用软件高API等级预置与分发自律公约》自2019年5月1日起，新上架应用应基于Android 8.0（API等级26）及以上开发。
+
 
 
 ## 2021-05-28
@@ -116,4 +107,3 @@
 - 运行库
     - [修复] 单元测试`simple.runtime.Files.FilesTest`在Windows系统下无法通过
     - [优化] 将运行库包名从`com.google.devtools.simple.runtime`修改为`simple.runtime`
-

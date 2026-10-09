@@ -7,11 +7,9 @@
 	<meta name="description" content="安卓应用开发工具" />
 	<meta name="keywords" content="e,vb,es4a,simple,android,安卓,中文编程" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
-	<!-- <link rel="icon" href="static/image/favicon.ico" type="image/x-icon" /> -->
-	<link rel="icon" href="https://cdn.jsdmirror.com/gh/es4a-osc/es4a-osc@main/static/image/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="static/image/favicon.ico" type="image/x-icon" />
 	<!-- docsify主题(基于 https://cdn.jsdelivr.net/npm/docsify@4.11.3/themes/vue.css 优化而来) -->
-	<!-- <link rel="stylesheet" href="static/css/vue.css" /> -->
-	<link rel="stylesheet" href="https://cdn.jsdmirror.com/gh/es4a-osc/es4a-osc@main/static/css/vue.css" />
+	<link rel="stylesheet" href="static/css/vue.css" />
 </head>
 <body>
 	<!-- 绑定元素 -->
@@ -39,14 +37,14 @@
 		notFoundPage: true,
 		// 切换页面后是否自动跳转到页面顶部
 		auto2top: true,
-		// 执行文档里的第一个script标签里的脚本
-		executeScript: true,
+		// 正式文档不执行 Markdown 中的试验脚本
+		executeScript: false,
 		// 小屏设备下合并导航栏到侧边栏
 		mergeNavbar: true,
 		// 最大支持渲染的标题层级
 		maxLevel: 4,
 		// 生成目录(侧边栏)的最大层级
-		subMaxLevel: 4,
+		subMaxLevel: 2,
 		// 格式化文档更新时间
 		formatUpdated: "{YYYY}/{MM}/{DD}",
 		// 定义路由别名，可以更自由的定义路由规则。支持正则。
@@ -91,15 +89,35 @@
 		// 全文搜索/search
 		search: {
 			// 过期时间，单位毫秒，默认一天
-			maxAge: 86400000,
+			maxAge: 0,
 			// 路径
-			paths: "auto",
+			paths: [
+				"/CHANGELOG",
+				"/README",
+				"/ROADMAP",
+				"/api/README",
+				"/libraries/README",
+				"/library-development/README",
+				"/library-development/build",
+				"/reference/manifests",
+				"/reference/sdk",
+				"/simple/README",
+				"/simple/Simple类库开发",
+				"/simple/Simple语言定义",
+				"/tutorial/build",
+				"/tutorial/designer",
+				"/tutorial/environment",
+				"/tutorial/faq",
+				"/tutorial/project",
+				"/tutorial/started"
+			],
 			// 搜索提示
-			placeholder: "搜索...",
+			placeholder: "搜索指南、语法或使用问题",
 			// 未搜索到显示
-			noData: "未搜索不相关内容！",
+			noData: "没有找到相关内容",
 			// 搜索标题的最大程级，1 - 6
-			depth: 4
+			depth: 4,
+			namespace: "es4a-public-guides-20261008"
 		},
 		// 复制代码到剪贴板/docsify-copy-code
 		copyCode: {
@@ -124,6 +142,8 @@
 
 	<!-- Docsify官方插件 -->
 
+	<!-- 本地搜索摘要适配，先于搜索插件加载 -->
+	<script src="static/js/search-text.js"></script>
 	<!-- 全文搜索(https://github.com/docsifyjs/docsify/tree/develop/src/plugins/search) -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/plugins/search.min.js"></script>
 	<!-- emoji表情(https://github.com/docsifyjs/docsify/tree/develop/src/plugins) -->
@@ -135,7 +155,7 @@
 
 	<!-- Docsify第三方插件 -->
 
-  	<!-- 复制代码到剪贴板(https://github.com/jperasmus/docsify-copy-code) -->
+	<!-- 复制代码到剪贴板(https://github.com/jperasmus/docsify-copy-code) -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/docsify-copy-code/3.0.0/docsify-copy-code.min.js"></script>
 
 	<!-- Prism代码高亮 -->
@@ -165,7 +185,6 @@
 	<!-- Visual Basic -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/prism/1.29.0/components/prism-basic.min.js"></script>
 	<!-- Simple 本地自定义实现(基于 https://cdn.jsdelivr.net/npm/prismjs@1.20.0/components/prism-visual-basic.js 修改而来) -->
-	<!-- <script src="static/js/prism-simple.js"></script> -->
-	<script src="https://cdn.jsdmirror.com/gh/es4a-osc/es4a-osc@main/static/js/prism-simple.js"></script>
+	<script src="static/js/prism-simple.js"></script>
 </body>
 </html>
