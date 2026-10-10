@@ -37,14 +37,10 @@
 				<p class="hero-note">还没安装 VS Code？<a href="https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer">下载 VS Code <span aria-hidden="true">↗</span></a></p>
 			</div>
 			<figure class="workspace" aria-labelledby="workspace-caption">
-				<!--
-					补图：ES4A 工作区总览，建议 1600×900（16:9）。
-					AI 提示词：使用真实 VS Code ES4A 工作区截图，采用深色主题，同时展示项目树、
-					Simple 代码编辑和窗口设计器。选择通用应用样例，保证中文代码清晰可读；
-					避开绝对路径、账户、终端、日期、版本号和具体扩展库列表，不拼造产品界面或代码。
-					将素材放入 static/image/，替换下方 src，并同步更新 alt、width、height 和图注。
-				-->
-				<img class="preview-image" src="static/image/screenshot-placeholder.svg" alt="ES4A 工作区截图占位，待补图" width="1600" height="900" />
+				<a class="preview-link" href="static/image/screenshot-placeholder.png" aria-label="查看 ES4A 工作区大图" aria-haspopup="dialog" aria-controls="workspace-viewer">
+					<img class="preview-image" src="static/image/screenshot-placeholder.png" alt="ES4A 工作区：项目树、Simple 代码和窗口设计器" width="2900" height="1727" />
+					<span class="preview-hint" aria-hidden="true">点击查看大图</span>
+				</a>
 				<figcaption id="workspace-caption">代码、窗口与项目，同一个工作区。</figcaption>
 			</figure>
 		</section>
@@ -179,6 +175,20 @@
 			</nav>
 		</div>
 	</footer>
+	<dialog class="image-viewer" id="workspace-viewer" aria-label="ES4A 工作区大图">
+		<button class="image-viewer-close" type="button" aria-label="关闭大图" title="关闭" autofocus>
+			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12 M18 6 6 18" /></svg>
+		</button>
+		<div class="image-viewer-content" id="workspace-viewer-content" tabindex="0" aria-label="截图，原始尺寸下可滚动查看">
+			<img class="image-viewer-image" alt="ES4A 工作区：项目树、Simple 代码和窗口设计器" width="2900" height="1727" hidden />
+			<p class="image-viewer-status" role="status">正在加载截图…</p>
+		</div>
+		<button class="image-viewer-size" type="button" aria-controls="workspace-viewer-content" disabled>
+			<svg class="image-viewer-zoom-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5 M16 3h5v5 M21 16v5h-5 M8 21H3v-5" /></svg>
+			<svg class="image-viewer-fit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h5V3 M21 8h-5V3 M16 21v-5h5 M8 21v-5H3" /></svg>
+			<span class="image-viewer-size-label">原始尺寸</span>
+		</button>
+	</dialog>
 	<button class="back-top" type="button" aria-label="返回顶部" hidden>
 		<svg viewBox="0 0 48 48" aria-hidden="true">
 			<circle class="progress-track" cx="24" cy="24" r="20" />

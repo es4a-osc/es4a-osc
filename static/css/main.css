@@ -43,6 +43,25 @@ h1 span { color: var(--code); }
 .workspace { min-width: 0; margin: 0; }
 .preview-image { display: block; width: 100%; height: auto; border: 1px solid #414141; border-radius: 6px; background: var(--surface); }
 .workspace figcaption { margin-top: 14px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.preview-link { position: relative; display: block; border-radius: 6px; cursor: zoom-in; }
+.preview-hint { position: absolute; right: 12px; bottom: 12px; padding: 6px 10px; border: 1px solid #555; border-radius: 4px; background: rgb(24 24 24 / 90%); color: var(--text); font-size: 12px; pointer-events: none; }
+html.image-viewer-open { overflow: hidden; }
+.image-viewer { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #0b0b0b; color: var(--text); }
+.image-viewer::backdrop { background: #0b0b0b; }
+.image-viewer-content { position: relative; width: 100%; height: 100%; padding: 24px; overflow: auto; overscroll-behavior: contain; outline-offset: -4px; }
+.image-viewer-image { display: block; width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
+.image-viewer-image[hidden] { display: none; }
+.image-viewer.is-original .image-viewer-image { width: auto; height: auto; max-width: none; max-height: none; cursor: zoom-out; }
+.image-viewer-status { position: absolute; top: 50%; left: 50%; margin: 0; color: var(--muted); text-align: center; transform: translate(-50%, -50%); }
+.image-viewer-close, .image-viewer-size { position: absolute; z-index: 2; display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 0; border: 1px solid rgb(255 255 255 / 15%); background: rgb(30 30 30 / 85%); color: #ddd; font: inherit; cursor: pointer; }
+.image-viewer-close { top: 20px; right: 20px; width: 44px; border-radius: 50%; }
+.image-viewer-size { bottom: 20px; left: 50%; gap: 8px; padding: 0 18px; border-radius: 24px; font-size: 13px; transform: translateX(-50%); }
+.image-viewer-close:hover, .image-viewer-size:hover { background: #363636; color: #fff; }
+.image-viewer-size:disabled { opacity: 0.5; cursor: default; }
+.image-viewer-close svg, .image-viewer-size svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.image-viewer-fit-icon { display: none; }
+.image-viewer.is-original .image-viewer-fit-icon { display: block; }
+.image-viewer.is-original .image-viewer-zoom-icon { display: none; }
 .feature-details { padding-block: 56px 64px; border-top: 1px solid var(--border); }
 .feature-details, .capabilities, .faq { scroll-margin-top: 104px; }
 .section-label { margin: 0 0 12px; color: var(--code); font-size: 13px; }
@@ -133,6 +152,9 @@ h1 span { color: var(--code); }
 	.footer-brand { grid-column: 1 / -1; }
 }
 @media (max-width: 480px) {
+	.image-viewer-content { padding: 12px; }
+	.image-viewer-close { top: 12px; right: 12px; }
+	.image-viewer-size { bottom: 12px; }
 	.header-inner { flex-wrap: wrap; gap: 4px; padding-block: 12px 4px; min-height: 0; }
 	.brand { gap: 8px; font-size: 20px; }
 	.brand img { width: 28px; height: 28px; }
